@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 rd=$(tput setaf 1) 
 rst=$(tput sgr0)           
 neon=$(tput setaf 118)  
