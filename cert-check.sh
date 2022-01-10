@@ -26,16 +26,13 @@ echo "--------------------------------------------------------------------------
 
 for dir in $(find ~ -type f -name "*.crt" 2>/dev/null | grep "\.crt$" | sed 's:[^/]*$::') ; do
     cd "${dir}" >/dev/null
-
     files=($(find ~ -type f -name "*.crt" 2>/dev/null | grep "\.crt$"))
 
     for file in ${files[*]} ; do
         dateone="$(openssl x509 -enddate -noout -in "${file}" | sed -e 's/notAfter=//g')"         
         datetwo="$(date +"%b %d%t%H:%M:%S %Y %Z")"
-
         dateone_seconds="$(date -j -f "%b %d%t%H:%M:%S %Y %Z" "${dateone}" "+%s")"                  
         datetwo_seconds="$(date -j -f "%b %d%t%H:%M:%S %Y %Z" "${datetwo}" "+%s")"
-
         let difference="${dateone_seconds}"-"${datetwo_seconds}"                               
         let result="${difference}"/86400
             if [[ $result -lt 1 ]]; then
